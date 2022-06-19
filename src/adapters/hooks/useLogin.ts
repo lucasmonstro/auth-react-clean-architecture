@@ -1,6 +1,6 @@
-import http from '../../../frameworks&drivers/http';
-import { Input, setupLoginUseCase } from '../../../useCases/login';
-import { setupGetUserAsJWTRepository } from '../../../useCases/repositories/getUserAsJWTRepository';
+import http from '../../frameworks&drivers/http';
+import { Input, setupLoginUseCase } from '../../useCases/login';
+import { setupGetUserAsJWTRepository } from '../../useCases/repositories/getUserAsJWTRepository';
 
 const useLogin = () => {
   const loginUseCase = async (input: Input) => {
