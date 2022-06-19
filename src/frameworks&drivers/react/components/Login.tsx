@@ -11,9 +11,9 @@ import {
 } from '@mui/material';
 import cookies from 'js-cookie';
 import { FormEvent, useState } from 'react';
-import { Input } from '../../useCases/login';
-import Copyright from './components/Copyright';
-import useLogin from './hooks/useLogin';
+import useLogin from '../../../adapters/hooks/useLogin';
+import { Input } from '../../../useCases/login';
+import Copyright from './Copyright';
 
 const Login = () => {
   const { loginUseCase } = useLogin();
