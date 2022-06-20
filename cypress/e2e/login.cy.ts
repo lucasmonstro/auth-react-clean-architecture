@@ -17,7 +17,6 @@ describe('login', () => {
   });
 
   it('should focus on password input when password is empty', () => {
-    // TODO: use faker instead
     getEmailInput().type('email@email.com');
     getSubmitButton().click();
     getPasswordInput().should('be.focused');
@@ -25,9 +24,7 @@ describe('login', () => {
 
   it('should appear invalid credentials when email or password are incorrect', () => {
     cy.intercept('POST', '/login', { statusCode: 400 }).as('login');
-    // TODO: use faker instead
     getEmailInput().type('email@email.com');
-    // TODO: use faker instead
     getPasswordInput().type('Password!0');
     getSubmitButton().click();
     cy.wait('@login');
@@ -36,9 +33,7 @@ describe('login', () => {
 
   it('should appear invalid credentials when email or password are incorrect', () => {
     cy.intercept('POST', '/login', { statusCode: 200, body: JWT }).as('login');
-    // TODO: use faker instead
     getEmailInput().type('email@email.com');
-    // TODO: use faker instead
     getPasswordInput().type('Password!0');
     getSubmitButton().click();
     cy.wait('@login');
