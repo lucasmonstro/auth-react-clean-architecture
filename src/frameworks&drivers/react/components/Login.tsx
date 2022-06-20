@@ -10,13 +10,13 @@ import {
   Typography,
 } from '@mui/material';
 import cookies from 'js-cookie';
-import { FormEvent, useState } from 'react';
-import useLogin from '../../../adapters/hooks/useLogin';
+import { FormEvent } from 'react';
 import { Input } from '../../../useCases/login';
+import useLogin from '../hooks/useLogin';
 import Copyright from './Copyright';
 
 const Login = () => {
-  const { loginUseCase, invalidCredentials } = useLogin(useState);
+  const { loginUseCase, invalidCredentials } = useLogin();
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
@@ -28,7 +28,6 @@ const Login = () => {
     if (!jwt) {
       return;
     }
-    // TODO: make this cookie readonly available on same domain
     cookies.set('accessToken', jwt.accessToken);
   };
   return (

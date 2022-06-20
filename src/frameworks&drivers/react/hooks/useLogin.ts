@@ -1,12 +1,16 @@
-import JWT from '../../entities/JWT';
-import { Input, setupLoginUseCase } from '../../useCases/login';
-import getUserJWTRepository from '../repositories/getUserJWTRepository';
+import { useState } from 'react';
+import setupRemoteGetUserJWTRepository from '../../../adapters/repositories/getUserJWTRepository';
+import JWT from '../../../entities/JWT';
+import { Input, setupLoginUseCase } from '../../../useCases/login';
+import axiosInstance from '../../axios';
 
-const useLogin = (useState: any) => {
+const useLogin = () => {
   const [invalidCredentials, setInvalidCredentials] = useState(false);
   const loginUseCase = async (input: Input): Promise<JWT | null> => {
     try {
       setInvalidCredentials(false);
+      const getUserJWTRepository =
+        setupRemoteGetUserJWTRepository(axiosInstance);
       const loginUseCase = setupLoginUseCase(getUserJWTRepository);
       const jwt = await loginUseCase(input);
       return jwt;

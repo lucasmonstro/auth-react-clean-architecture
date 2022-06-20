@@ -5,7 +5,7 @@ export type Setup = (
   getUserJwtRepository: GetUserJWTRepository
 ) => LoginUseCase;
 export type Input = { email: string; password: string };
-export type Output = JWT;
+export type Output = JWT | null;
 export type LoginUseCase = (input: Input) => Promise<Output>;
 
 export const setupLoginUseCase: Setup =
