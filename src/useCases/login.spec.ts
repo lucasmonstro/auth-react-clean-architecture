@@ -1,17 +1,17 @@
 import { faker } from '@faker-js/faker';
 import JWT from '../entities/JWT';
-import { Input, setupLoginUseCase, UseCase } from './login';
-import { Repository as GetUserAsJWTRepository } from './repositories/getUserAsJWTRepository';
+import { Input, LoginUseCase, setupLoginUseCase } from './login';
+import { GetUserJWTRepository } from './repositories/getUserJWTRepository';
 
 type SutTypes = {
-  sut: UseCase;
-  getUserAsJWTRepository: jest.MockedFunction<GetUserAsJWTRepository>;
+  sut: LoginUseCase;
+  getUserJWTRepository: jest.MockedFunction<GetUserJWTRepository>;
 };
 
 const makeSut = (): SutTypes => {
-  const getUserAsJWTRepository = jest.fn();
-  const sut = setupLoginUseCase(getUserAsJWTRepository);
-  return { sut, getUserAsJWTRepository };
+  const getUserJWTRepository = jest.fn();
+  const sut = setupLoginUseCase(getUserJWTRepository);
+  return { sut, getUserJWTRepository };
 };
 
 const makeInputMock = (input?: Partial<Input>): Input => ({
@@ -28,10 +28,10 @@ const makeJWTMock = (input?: Partial<JWT>): JWT => ({
 
 describe('login', () => {
   it('should return a JWT', async () => {
-    const { sut, getUserAsJWTRepository } = makeSut();
+    const { sut, getUserJWTRepository } = makeSut();
     const input = makeInputMock();
     const jwt = makeJWTMock();
-    getUserAsJWTRepository.mockReturnValueOnce(Promise.resolve(jwt));
+    getUserJWTRepository.mockResolvedValueOnce(jwt);
     const output = await sut(input);
     expect(output).toStrictEqual(jwt);
   });

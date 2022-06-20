@@ -1,5 +1,6 @@
 import { LockOutlined as LockOutlinedIcon } from '@mui/icons-material';
 import {
+  Alert,
   Avatar,
   Box,
   Button,
@@ -7,7 +8,6 @@ import {
   Stack,
   TextField,
   Typography,
-  Alert,
 } from '@mui/material';
 import cookies from 'js-cookie';
 import { FormEvent, useState } from 'react';
@@ -16,20 +16,16 @@ import { Input } from '../../../useCases/login';
 import Copyright from './Copyright';
 
 const Login = () => {
-  const { loginUseCase } = useLogin();
-  const [invalidCredentials, setInvalidCredentials] = useState(false);
+  const { loginUseCase, invalidCredentials } = useLogin(useState);
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setInvalidCredentials(false);
     const formData = new FormData(event.currentTarget);
     const input: Input = {
       email: formData.get('email') as string,
       password: formData.get('password') as string,
     };
     const jwt = await loginUseCase(input);
-    const invalidCredentials = !jwt;
-    if (invalidCredentials) {
-      setInvalidCredentials(true);
+    if (!jwt) {
       return;
     }
     // TODO: make this cookie readonly available on same domain

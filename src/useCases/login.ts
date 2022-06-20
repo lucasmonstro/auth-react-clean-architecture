@@ -1,12 +1,14 @@
 import JWT from '../entities/JWT';
-import { Repository as GetUserAsJWTRepository } from './repositories/getUserAsJWTRepository';
+import { GetUserJWTRepository } from './repositories/getUserJWTRepository';
 
-export type Setup = (getUserAsJwtRepository: GetUserAsJWTRepository) => UseCase;
+export type Setup = (
+  getUserJwtRepository: GetUserJWTRepository
+) => LoginUseCase;
 export type Input = { email: string; password: string };
 export type Output = JWT;
-export type UseCase = (input: Input) => Promise<Output>;
+export type LoginUseCase = (input: Input) => Promise<Output>;
 
 export const setupLoginUseCase: Setup =
-  (getUserAsJWTRepository: GetUserAsJWTRepository): UseCase =>
+  (getUserJWTRepository: GetUserJWTRepository): LoginUseCase =>
   async (input: Input): Promise<Output> =>
-    getUserAsJWTRepository(input);
+    getUserJWTRepository(input);
